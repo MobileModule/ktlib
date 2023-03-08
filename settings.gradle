@@ -1,5 +1,4 @@
-include 'select-photos'
-include 'locallan'
+include 'base'
 include 'main'
   
 
