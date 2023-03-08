@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdk androidVersions.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation dependenciesList.Appcompat
+    implementation dependenciesList.Kotlin
+    implementation dependenciesList.CoreKtx
+    implementation dependenciesList.LifecycleRuntimeKtx
+    implementation dependenciesList.LifecycleCommonJava8
+    implementation dependenciesList.LifecycleExtensions
+    implementation dependenciesList.LifecycleViewmodelKtx
+    implementation dependenciesList.LifecycleLivedataKtx
+    implementation dependenciesList.FragmentKtx
+    api dependenciesList.LiveDataUnpeek
+    api dependenciesList.Retrofit2
+    api dependenciesList.Retrofit2GSON
+    api dependenciesList.RetrofitUrlManager
+    api dependenciesList.PersistentCookieJar
+}
