@@ -1,0 +1,9 @@
+ext {
+    androidBuild = [
+            versionName: "1.8.0",
+            versionCode: 180,
+    ]
+    GROUP = 'com.druid.ktlib'
+    POM_URL = 'http://localhost:8081/repository/druid/'
+    POM_PACKAGING = 'aar'
+}

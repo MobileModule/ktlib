@@ -19,22 +19,20 @@ sealed class ResultState <out T> {
 
 /**
  * 处理返回值
- * @param result 请求结果
  */
 fun <T> MutableLiveData<ResultState<T>>.paresResult(result: BaseResponse<T>) {
     value = when {
-        result.isSuccess() -> {
+      result.isSuccess() -> {
             ResultState.onAppSuccess(result.getResponseData())
         }
         else -> {
-            ResultState.onAppError(AppException(result.getResponseCode(), result.getResponseMsg()))
+            ResultState.onAppError(AppException(result.getResponseCode()))
         }
     }
 }
 
 /**
  * 不处理返回值 直接返回请求结果
- * @param result 请求结果
  */
 fun <T> MutableLiveData<ResultState<T>>.paresResult(result: T) {
     value = ResultState.onAppSuccess(result)

@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk androidVersions.compileSdkVersion
@@ -47,14 +48,12 @@ dependencies {
     api dependenciesList.PersistentCookieJar
 }
 
-afterEvaluate {
+if (rootProject.file('gradle/publish-module.gradle').exists()) {
+    apply from: rootProject.file('gradle/publish-module.gradle')
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
-                groupId = 'com.druid.kotlin'
                 artifactId = 'ktlib'
-                version = '1.0.1'
             }
         }
     }

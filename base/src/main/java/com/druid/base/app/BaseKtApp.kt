@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 
-class BaseApp : Application(), ViewModelStoreOwner {
+class BaseKtApp : Application(), ViewModelStoreOwner {
 
     private lateinit var mAppViewModelStore: ViewModelStore
 

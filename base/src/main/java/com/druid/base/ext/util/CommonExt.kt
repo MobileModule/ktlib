@@ -1,4 +1,4 @@
-package com.druid.base.utils
+package com.druid.base.ext.util
 
 /**
  * 判断是否为空 并传入相关操作

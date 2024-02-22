@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.druid.base.ext.getVmClazz
 import com.druid.base.network.manager.NetState
 import com.druid.base.network.manager.NetworkStateManager
-import com.druid.base.utils.notNull
+import com.druid.base.ext.util.notNull
 import com.druid.base.viewmodel.BaseViewModel
 
 /**
