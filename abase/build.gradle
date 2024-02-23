@@ -46,3 +46,14 @@ dependencies {
     api dependenciesList.RetrofitUrlManager
     api dependenciesList.PersistentCookieJar
 }
+
+if (rootProject.file('gradle/publish-module.gradle').exists()) {
+    apply from: rootProject.file('gradle/publish-module.gradle')
+    publishing {
+        publications {
+            release(MavenPublication) {
+                artifactId = 'ktlib'
+            }
+        }
+    }
+}

@@ -3,7 +3,7 @@ ext {
             versionName: "1.8.0",
             versionCode: 180,
     ]
-    GROUP = 'com.druid.ktlib'
+    GROUP = 'com.android.abase'
     POM_URL = 'http://localhost:8081/repository/druid/'
     POM_PACKAGING = 'aar'
 }
