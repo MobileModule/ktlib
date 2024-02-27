@@ -2,12 +2,38 @@ package com.android.abase.ext
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewParent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
+
+
+@JvmName("inflateWithGeneric")
+fun <VB : ViewBinding> ViewGroup.inflateBindingWithGeneric(layoutInflater: LayoutInflater): VB =
+    withGenericBindingClass<VB>(this) { clazz ->
+        clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java,
+            Boolean::class.java)
+            .invoke(null, layoutInflater, this, true) as VB
+    }.also { binding ->
+        if (binding is ViewDataBinding) {
+            binding.lifecycleOwner = findLifecycleOwner()
+        }
+    }
+
+fun ViewGroup.findLifecycleOwner(): LifecycleOwner? {
+    var parent: ViewParent? = this
+    while (parent != null) {
+        if (parent is LifecycleOwner) {
+            return parent
+        }
+        parent = parent.parent
+    }
+    return null
+}
 
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> AppCompatActivity.inflateBindingWithGeneric(layoutInflater: LayoutInflater): VB =
