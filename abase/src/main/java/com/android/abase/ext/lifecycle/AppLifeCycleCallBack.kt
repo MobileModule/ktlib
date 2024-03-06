@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.android.abase.ext.util.logd
 
 
-class KtxLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
+class AppLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         MyActivityManager.addActivity(activity)

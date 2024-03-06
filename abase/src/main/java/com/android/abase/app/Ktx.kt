@@ -8,8 +8,8 @@ import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.android.abase.ext.lifecycle.KtxAppLifeObserver
-import com.android.abase.ext.lifecycle.KtxLifeCycleCallBack
+import com.android.abase.ext.lifecycle.AppLifeObserver
+import com.android.abase.ext.lifecycle.AppLifeCycleCallBack
 import com.android.abase.network.manager.NetworkStateReceive
 
 val appContext: Application by lazy { Ktx.app }
@@ -36,8 +36,8 @@ class Ktx : ContentProvider() {
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
 
-        if (watchActivityLife) application.registerActivityLifecycleCallbacks(KtxLifeCycleCallBack())
-        if (watchAppLife) ProcessLifecycleOwner.get().lifecycle.addObserver(KtxAppLifeObserver)
+        if (watchActivityLife) application.registerActivityLifecycleCallbacks(AppLifeCycleCallBack())
+        if (watchAppLife) ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifeObserver)
     }
 
     override fun query(

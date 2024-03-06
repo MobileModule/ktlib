@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.android.abase.callback.livedata.BooleanLiveData
 
-object KtxAppLifeObserver : LifecycleObserver {
+object AppLifeObserver : LifecycleObserver {
 
     var isForeground = BooleanLiveData()
 
