@@ -17,7 +17,9 @@ import com.android.abase.viewmodel.BaseViewModel
 abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
     lateinit var mViewModel: VM
     abstract fun layoutId(): Int
+    abstract fun initStyle(savedInstanceState: Bundle?)
     abstract fun initView(savedInstanceState: Bundle?)
+    abstract fun initData(savedInstanceState: Bundle?)
     abstract fun showLoading(message: String = "请求网络中...")
 
     abstract fun dismissLoading()
@@ -35,11 +37,13 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
     private fun init(savedInstanceState: Bundle?) {
         mViewModel = createViewModel()
         registerUiChange()
+        initStyle(savedInstanceState)
         initView(savedInstanceState)
-        createObserver();
+        createObserver()
         NetworkStateManager.instance.mNetworkStateCallback.observeInActivity(this, Observer {
             onNetworkStateChanged(it)
         })
+        initData(savedInstanceState)
     }
 
     /**

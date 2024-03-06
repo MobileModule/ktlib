@@ -9,7 +9,7 @@ import com.android.abase.ext.util.logd
 class KtxLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        KtxActivityManger.pushActivity(activity)
+        MyActivityManager.addActivity(activity)
         "onActivityCreated : ${activity.localClassName}".logd()
     }
     override fun onActivityStarted(activity: Activity) {
@@ -27,7 +27,7 @@ class KtxLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) {
         "onActivityDestroyed : ${activity.localClassName}".logd()
-        KtxActivityManger.popActivity(activity)
+        MyActivityManager.finishActivity(activity)
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
