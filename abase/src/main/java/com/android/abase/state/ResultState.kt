@@ -5,7 +5,7 @@ import com.android.abase.network.AppException
 import com.android.abase.network.BaseResponse
 import com.android.abase.network.ExceptionHandle
 
-sealed class ResultState <out T> {
+sealed class ResultState<out T> {
     companion object {
         fun <T> onAppSuccess(data: T): ResultState<T> = Success(data)
         fun <T> onAppLoading(loadingMessage: String): ResultState<T> = Loading(loadingMessage)
@@ -19,20 +19,22 @@ sealed class ResultState <out T> {
 
 /**
  * 处理返回值
+ * @param result 请求结果
  */
 fun <T> MutableLiveData<ResultState<T>>.paresResult(result: BaseResponse<T>) {
     value = when {
-      result.isSuccess() -> {
-          ResultState.onAppSuccess(result.getResponseData())
+        result.isSuccess() -> {
+            ResultState.onAppSuccess(result.getResponseData())
         }
         else -> {
-            ResultState.onAppError(AppException(result.getResponseCode()))
+            ResultState.onAppError(AppException(result.getResponseCode(), result.getResponseMsg()))
         }
     }
 }
 
 /**
  * 不处理返回值 直接返回请求结果
+ * @param result 请求结果
  */
 fun <T> MutableLiveData<ResultState<T>>.paresResult(result: T) {
     value = ResultState.onAppSuccess(result)

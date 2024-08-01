@@ -3,16 +3,27 @@ package com.android.abase.network
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * 网络请求构建器基类
  */
 abstract class BaseNetworkApi {
     fun <T> getApi(serviceClass: Class<T>, baseUrl: String): T {
+        val fixedBaseUrl = ensureTrailingSlash(baseUrl)
         val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(fixedBaseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
         return setRetrofitBuilder(retrofitBuilder).build().create(serviceClass)
+    }
+
+    private fun ensureTrailingSlash(baseUrl: String): String {
+        return if (baseUrl.endsWith("/")) {
+            baseUrl
+        } else {
+            "$baseUrl/"
+        }
     }
 
     /**

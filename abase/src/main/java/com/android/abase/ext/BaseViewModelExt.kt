@@ -42,7 +42,7 @@ fun <T> BaseVMActivity<*>.parseState(
 
 fun <T> BaseVMFragment<*>.parseState(
     resultState: ResultState<T>,
-    onSuccess: (T) -> Unit,
+    onSuccess: (T?) -> Unit,
     onError: ((AppException) -> Unit)? = null,
     onLoading: ((message: String) -> Unit)? = null
 ) {

@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk androidVersions.compileSdkVersion
-
+    namespace 'com.android.abase'
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
@@ -36,7 +36,6 @@ dependencies {
     implementation dependenciesList.CoreKtx
     implementation dependenciesList.LifecycleRuntimeKtx
     implementation dependenciesList.LifecycleCommonJava8
-    implementation dependenciesList.LifecycleExtensions
     implementation dependenciesList.LifecycleViewmodelKtx
     implementation dependenciesList.LifecycleLivedataKtx
     implementation dependenciesList.FragmentKtx
@@ -45,6 +44,8 @@ dependencies {
     api dependenciesList.Retrofit2GSON
     api dependenciesList.RetrofitUrlManager
     api dependenciesList.PersistentCookieJar
+    implementation dependenciesList.NavigationFragmentKtx
+    implementation dependenciesList.NavigationCommonKtx
 }
 
 if (rootProject.file('gradle/publish-module.gradle').exists()) {

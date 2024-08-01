@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 
- abstract class BaseKtApp : Application(), ViewModelStoreOwner {
+open class BaseKtApp : Application() {
 
     private lateinit var mAppViewModelStore: ViewModelStore
 
     private var mFactory: ViewModelProvider.Factory? = null
 
-//     fun getViewModelStore(): ViewModelStore {
-//        return mAppViewModelStore
-//    }
+    private fun getViewModelStore(): ViewModelStore {
+        return mAppViewModelStore
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelStoreOwner
      * 获取一个全局的ViewModel
      */
     fun getAppViewModelProvider(): ViewModelProvider {
-        return ViewModelProvider(this, this.getAppFactory())
+        return ViewModelProvider(getViewModelStore(), this.getAppFactory())
     }
 
     private fun getAppFactory(): ViewModelProvider.Factory {

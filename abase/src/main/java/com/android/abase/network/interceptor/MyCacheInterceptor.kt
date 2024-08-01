@@ -9,7 +9,7 @@ import okhttp3.Response
 /**
  * @param day 缓存天数 默认7天
  */
-class CacheInterceptor(var day: Int = 7) : Interceptor {
+class MyCacheInterceptor(var day: Int = 7) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         if (!NetworkUtil.isNetworkAvailable(appContext)) {
