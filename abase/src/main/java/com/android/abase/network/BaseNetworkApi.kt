@@ -1,9 +1,12 @@
 package com.android.abase.network
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 /**
  * 网络请求构建器基类
@@ -13,10 +16,14 @@ abstract class BaseNetworkApi {
         val fixedBaseUrl = ensureTrailingSlash(baseUrl)
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl(fixedBaseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
         return setRetrofitBuilder(retrofitBuilder).build().create(serviceClass)
     }
+
+    var gson: Gson = GsonBuilder()
+        .setLenient()
+        .create()
 
     private fun ensureTrailingSlash(baseUrl: String): String {
         return if (baseUrl.endsWith("/")) {
