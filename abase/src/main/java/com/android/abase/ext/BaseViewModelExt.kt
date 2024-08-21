@@ -2,7 +2,9 @@ package com.android.abase.ext
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.android.abase.R
 import com.android.abase.activity.BaseVMActivity
+import com.android.abase.app.appContext
 import com.android.abase.ext.util.loge
 import com.android.abase.fragment.BaseVMFragment
 import com.android.abase.network.AppException
@@ -29,10 +31,12 @@ fun <T> BaseVMActivity<*>.parseState(
             showLoading(resultState.loadingMessage)
             onLoading?.run { this }
         }
+
         is ResultState.Success -> {
             dismissLoading()
             onSuccess(resultState.data)
         }
+
         is ResultState.Error -> {
             dismissLoading()
             onError?.run { this(resultState.error) }
@@ -54,10 +58,12 @@ fun <T> BaseVMFragment<*>.parseState(
                 onLoading.invoke(resultState.loadingMessage)
             }
         }
+
         is ResultState.Success -> {
             dismissLoading()
             onSuccess(resultState.data)
         }
+
         is ResultState.Error -> {
             dismissLoading()
             onError?.run { this(resultState.error) }
@@ -65,11 +71,14 @@ fun <T> BaseVMFragment<*>.parseState(
     }
 }
 
+/**
+ * 回调未处理，结果已封装
+ */
 fun <T> BaseViewModel.request(
     block: suspend () -> BaseResponse<T>,
     resultState: MutableLiveData<ResultState<T>>,
     isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
+    loadingMessage: String = appContext.getString(R.string.loading)
 ): Job {
     return viewModelScope.launch {
         runCatching {
@@ -86,34 +95,15 @@ fun <T> BaseViewModel.request(
     }
 }
 
-fun <T> BaseViewModel.requestNoCheck(
-    block: suspend () -> T,
-    resultState: MutableLiveData<ResultState<T>>,
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
-): Job {
-    return viewModelScope.launch {
-        runCatching {
-            if (isShowDialog) resultState.value = ResultState.onAppLoading(loadingMessage)
-            //请求体
-            block()
-        }.onSuccess {
-            resultState.paresResult(it)
-        }.onFailure {
-            it.message?.loge()
-            //打印错误栈信息
-            it.printStackTrace()
-            resultState.paresException(it)
-        }
-    }
-}
-
+/**
+ * 回调已处理，结果已封装
+ */
 fun <T> BaseViewModel.request(
     block: suspend () -> BaseResponse<T>,
     success: (T) -> Unit,
     error: (AppException) -> Unit = {},
     isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
+    loadingMessage: String = appContext.getString(R.string.loading)
 ): Job {
     return viewModelScope.launch {
         runCatching {
@@ -149,12 +139,66 @@ fun <T> BaseViewModel.request(
     }
 }
 
+/**
+ * 回调已处理，结果不封装
+ */
+fun <T> BaseViewModel.requestNoSeal(
+    block: suspend () -> BaseResponse<T>,
+    success: (BaseResponse<T>) -> Unit,
+    error: (AppException) -> Unit = {},
+    isShowDialog: Boolean = false,
+    loadingMessage: String = appContext.getString(R.string.loading)
+): Job {
+    return viewModelScope.launch {
+        runCatching {
+            if (isShowDialog) loadingChange.showDialog.postValue(loadingMessage)
+            //请求体
+            block()
+        }.onSuccess {
+            //网络请求成功 关闭弹窗
+            loadingChange.dismissDialog.postValue(false)
+            success(it)
+        }.onFailure {
+            //网络请求异常 关闭弹窗
+            loadingChange.dismissDialog.postValue(false)
+            //打印错误消息
+            it.message?.loge()
+            //打印错误栈信息
+            it.printStackTrace()
+            //失败回调
+            error(ExceptionHandle.handleException(it))
+        }
+    }
+}
+
+fun <T> BaseViewModel.requestNoCheck(
+    block: suspend () -> T,
+    resultState: MutableLiveData<ResultState<T>>,
+    isShowDialog: Boolean = false,
+    loadingMessage: String = appContext.getString(R.string.loading)
+): Job {
+    return viewModelScope.launch {
+        runCatching {
+            if (isShowDialog) resultState.value = ResultState.onAppLoading(loadingMessage)
+            //请求体
+            block()
+        }.onSuccess {
+            resultState.paresResult(it)
+        }.onFailure {
+            it.message?.loge()
+            //打印错误栈信息
+            it.printStackTrace()
+            resultState.paresException(it)
+        }
+    }
+}
+
 fun <T> BaseViewModel.requestNoCheck(
     block: suspend () -> T,
     success: (T) -> Unit,
     error: (AppException) -> Unit = {},
     isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
+    loadingMessage: String = appContext.getString(R.string.loading)
 ): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     if (isShowDialog) loadingChange.showDialog.postValue(loadingMessage)

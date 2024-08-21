@@ -123,6 +123,22 @@ abstract class BaseVMFragment<VM : BaseViewModel> : Fragment() {
         })
     }
 
+    /**
+     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
+        viewModels.forEach { viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observeInFragment(this, Observer {
+                showLoading(it)
+            })
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observeInFragment(this, Observer {
+                dismissLoading()
+            })
+        }
+    }
 
     abstract fun showLoading(message: String = "请求网络中...")
 
