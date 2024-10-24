@@ -40,6 +40,8 @@ dependencies {
     implementation dependenciesList.LifecycleLivedataKtx
     implementation dependenciesList.FragmentKtx
     api dependenciesList.LiveDataUnpeek
+    implementation dependenciesList.Okhttp3
+    implementation dependenciesList.Okhttp3Interagtion
     api dependenciesList.Retrofit2
     api dependenciesList.Retrofit2GSON
     api dependenciesList.RetrofitUrlManager

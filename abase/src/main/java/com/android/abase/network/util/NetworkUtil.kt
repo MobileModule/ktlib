@@ -1,4 +1,4 @@
-package com.android.abase.network
+package com.android.abase.network.util
 
 import android.content.Context
 import android.net.ConnectivityManager

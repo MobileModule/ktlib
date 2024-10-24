@@ -1,4 +1,4 @@
-package com.android.abase.network
+package com.android.abase.network.model
 
 /**
  * 服务器返回数据的基类
@@ -13,5 +13,7 @@ abstract class BaseResponse <T> {
     abstract fun getResponseCode(): Int
 
     abstract fun getResponseMsg(): String
+
+    abstract fun getAuthToken(): String
 
 }

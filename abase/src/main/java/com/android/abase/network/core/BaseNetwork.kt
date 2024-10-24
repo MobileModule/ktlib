@@ -1,4 +1,4 @@
-package com.android.abase.network
+package com.android.abase.network.core
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * 网络请求构建器基类
  */
-abstract class BaseNetworkApi {
-    fun <T> getApi(serviceClass: Class<T>, baseUrl: String): T {
+abstract class BaseNetwork {
+    fun <T> getApi(serviceClass: Class<T>, baseUrl: String=""): T {
         val fixedBaseUrl = ensureTrailingSlash(baseUrl)
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl(fixedBaseUrl)

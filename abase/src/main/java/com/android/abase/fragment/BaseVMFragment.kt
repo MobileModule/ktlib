@@ -115,10 +115,10 @@ abstract class BaseVMFragment<VM : BaseViewModel> : Fragment() {
      * 注册 UI 事件
      */
     private fun registorDefUIChange() {
-        mViewModel.loadingChange.showDialog.observeInFragment(this, Observer {
+        mViewModel.loadingStatus.showDialog.observe(viewLifecycleOwner, Observer {
             showLoading(it)
         })
-        mViewModel.loadingChange.dismissDialog.observeInFragment(this, Observer {
+        mViewModel.loadingStatus.dismissDialog.observe(viewLifecycleOwner, Observer {
             dismissLoading()
         })
     }
@@ -130,11 +130,11 @@ abstract class BaseVMFragment<VM : BaseViewModel> : Fragment() {
     protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
         viewModels.forEach { viewModel ->
             //显示弹窗
-            viewModel.loadingChange.showDialog.observeInFragment(this, Observer {
+            viewModel.loadingStatus.showDialog.observe(viewLifecycleOwner, Observer {
                 showLoading(it)
             })
             //关闭弹窗
-            viewModel.loadingChange.dismissDialog.observeInFragment(this, Observer {
+            viewModel.loadingStatus.dismissDialog.observe(viewLifecycleOwner, Observer {
                 dismissLoading()
             })
         }

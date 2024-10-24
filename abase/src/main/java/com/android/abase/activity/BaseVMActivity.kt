@@ -17,6 +17,7 @@ import com.android.abase.viewmodel.BaseViewModel
 abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
     lateinit var mViewModel: VM
     abstract fun layoutId(): Int
+    abstract fun requestView(savedInstanceState: Bundle?)
     abstract fun initStyle(savedInstanceState: Bundle?)
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData(savedInstanceState: Bundle?)
@@ -25,6 +26,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
     abstract fun dismissLoading()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestView(savedInstanceState)
         super.onCreate(savedInstanceState)
         initDataBind().notNull({
             setContentView(it)
@@ -56,11 +58,11 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
      */
     private fun registerUiChange() {
         //显示弹窗
-        mViewModel.loadingChange.showDialog.observeInActivity(this, Observer {
+        mViewModel.loadingStatus.showDialog.observe(this, Observer {
             showLoading(it)
         })
         //关闭弹窗
-        mViewModel.loadingChange.dismissDialog.observeInActivity(this, Observer {
+        mViewModel.loadingStatus.dismissDialog.observe(this, Observer {
             dismissLoading()
         })
     }
@@ -72,11 +74,11 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
     protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
         viewModels.forEach { viewModel ->
             //显示弹窗
-            viewModel.loadingChange.showDialog.observeInActivity(this, Observer {
+            viewModel.loadingStatus.showDialog.observe(this, Observer {
                 showLoading(it)
             })
             //关闭弹窗
-            viewModel.loadingChange.dismissDialog.observeInActivity(this, Observer {
+            viewModel.loadingStatus.dismissDialog.observe(this, Observer {
                 dismissLoading()
             })
         }
@@ -93,7 +95,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : AppCompatActivity() {
      * 创建ViewModel
      */
     private fun createViewModel(): VM {
-        return ViewModelProvider(this).get(getVmClazz(this))
+        return ViewModelProvider(this)[getVmClazz(this)]
     }
 
     /**

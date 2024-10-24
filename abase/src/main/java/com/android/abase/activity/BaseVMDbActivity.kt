@@ -1,5 +1,6 @@
 package com.android.abase.activity
 
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.android.abase.ext.inflateBindingWithGeneric
@@ -18,4 +19,8 @@ abstract class BaseVMDbActivity<VM : BaseViewModel, DB : ViewDataBinding> : Base
         mDatabind = inflateBindingWithGeneric(layoutInflater)
         return mDatabind.root
     }
+
+   override fun requestView(savedInstanceState: Bundle?){
+
+   }
 }
