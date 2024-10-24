@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 //双重校验锁式-单例 封装NetworkService 方便直接快速调用简单的接口
 val networkService: NetworkService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-    Network.INSTANCE.getApi(NetworkService::class.java)
+    Network.INSTANCE.getApi(NetworkService::class.java, Network.baseUrl)
 }
 
 class Network : BaseNetwork() {
@@ -32,6 +32,7 @@ class Network : BaseNetwork() {
             Network()
         }
         var tokenHeader = ""
+        var baseUrl = ""
     }
 
     /**
