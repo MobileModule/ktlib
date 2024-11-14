@@ -1,5 +1,6 @@
 package com.android.abase.network.core
 
+import com.android.abase.BuildConfig
 import com.android.abase.app.appContext
 import com.android.abase.ext.lifecycle.logging.LogInterceptor
 import com.android.abase.network.interceptor.MyCacheInterceptor
@@ -33,6 +34,7 @@ class Network : BaseNetwork() {
         }
         var tokenHeader = ""
         var baseUrl = ""
+        var responseCodeInterceptor: (Int) -> Unit = {}
     }
 
     /**
@@ -46,12 +48,14 @@ class Network : BaseNetwork() {
             //添加Cookies自动持久化
 //            cookieJar(cookieJar)
             //示例：添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
-            addInterceptor(MyHeaderInterceptor())
-            addInterceptor(MyResponseInterceptor(tokenHeader))
+//            addInterceptor(MyHeaderInterceptor())
+            addInterceptor(MyResponseInterceptor(tokenHeader, responseCodeInterceptor))
             //添加缓存拦截器 可传入缓存天数，不传默认7天
             addInterceptor(MyCacheInterceptor())
             // 日志拦截器
-            addInterceptor(LogInterceptor())
+            if (BuildConfig.DEBUG) {
+                addInterceptor(LogInterceptor())
+            }
             //
             sslSocketFactory(
                 SSLSocketClient.TrustAll.createSSLSocketFactory(),

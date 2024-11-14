@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.android.abase.R
 import com.android.abase.app.appContext
 import com.android.abase.ext.util.loge
+import com.android.abase.network.except.ExceptionHandle
+import com.android.abase.network.model.AppException
+import com.android.abase.network.model.BaseResponse
 import com.android.abase.state.ResultState
 import com.android.abase.state.paresException
 import com.android.abase.state.paresResult
@@ -19,7 +22,7 @@ import kotlinx.coroutines.withContext
  * 回调未处理，结果已封装
  */
 fun <T> CoroutineScope.requestResult(
-    block: suspend () -> com.android.abase.network.model.BaseResponse<T>,
+    block: suspend () -> BaseResponse<T>,
     resultState: MutableLiveData<ResultState<T>>,
     isShowDialog: Boolean = false,
     loadingMessage: String = appContext.getString(R.string.loading)
@@ -43,9 +46,9 @@ fun <T> CoroutineScope.requestResult(
  * 回调已处理，结果已封装
  */
 fun <T> CoroutineScope.requestResultStatus(
-    block: suspend () -> com.android.abase.network.model.BaseResponse<T>,
+    block: suspend () -> BaseResponse<T>,
     success: (T) -> Unit,
-    error: (com.android.abase.network.model.AppException) -> Unit = {},
+    error: (AppException) -> Unit = {},
     isShowDialog: Boolean = false,
     loadingStatus: BaseViewModel.UiLoadingStatus?=null,
     loadingMessage: String = appContext.getString(R.string.loading)
@@ -75,7 +78,7 @@ fun <T> CoroutineScope.requestResultStatus(
                 //打印错误栈信息
                 e.printStackTrace()
                 //失败回调
-                error(com.android.abase.network.except.ExceptionHandle.handleException(e))
+                error(ExceptionHandle.handleException(e))
             }
         }.onFailure {
             //网络请求异常 关闭弹窗
@@ -87,13 +90,13 @@ fun <T> CoroutineScope.requestResultStatus(
             //打印错误栈信息
             it.printStackTrace()
             //失败回调
-            error(com.android.abase.network.except.ExceptionHandle.handleException(it))
+            error(ExceptionHandle.handleException(it))
         }
     }
 }
 
 suspend fun <T> executeResponse(
-    response: com.android.abase.network.model.BaseResponse<T>,
+    response: BaseResponse<T>,
     success: suspend CoroutineScope.(T) -> Unit
 ) {
     coroutineScope {
@@ -116,9 +119,9 @@ suspend fun <T> executeResponse(
  * 回调已处理，结果不封装
  */
 fun <T> CoroutineScope.requestStatus(
-    block: suspend () -> com.android.abase.network.model.BaseResponse<T>,
-    success: (com.android.abase.network.model.BaseResponse<T>) -> Unit,
-    error: (com.android.abase.network.model.AppException) -> Unit = {},
+    block: suspend () -> BaseResponse<T>,
+    success: (BaseResponse<T>) -> Unit,
+    error: (AppException) -> Unit = {},
     isShowDialog: Boolean = false,
     loadingStatus: BaseViewModel.UiLoadingStatus? = null,
     loadingMessage: String = appContext.getString(R.string.loading)
@@ -148,7 +151,7 @@ fun <T> CoroutineScope.requestStatus(
             //打印错误栈信息
             it.printStackTrace()
             //失败回调
-            error(com.android.abase.network.except.ExceptionHandle.handleException(it))
+            error(ExceptionHandle.handleException(it))
         }
     }
 }

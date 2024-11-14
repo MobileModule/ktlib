@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ktmvvm.iml" filepath="$PROJECT_DIR$/.idea/modules/ktmvvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.iml" filepath="$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.main.iml" filepath="$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/abase/ktmvvm.abase.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.iml" filepath="$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.main.iml" filepath="$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/main/ktmvvm.main.unitTest.iml" />
+    </modules>
+  </component>
+</project>

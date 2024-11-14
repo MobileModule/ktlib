@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: me.jessyan:retrofit-url-manager:1.4.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../GradleCache/caches/8.9/transforms/8607932e7a194fe88a45c136050346be/transformed/jetified-retrofit-url-manager-1.4.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../GradleCache/caches/8.9/transforms/8607932e7a194fe88a45c136050346be/transformed/jetified-retrofit-url-manager-1.4.0/res" />
+      <root url="file://$PROJECT_DIR$/../../../GradleCache/caches/8.9/transforms/8607932e7a194fe88a45c136050346be/transformed/jetified-retrofit-url-manager-1.4.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../GradleCache/caches/modules-2/files-2.1/me.jessyan/retrofit-url-manager/1.4.0/182a535425765cf842c80ea80f1f07c5bfd997f2/retrofit-url-manager-1.4.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../GradleCache/caches/modules-2/files-2.1/me.jessyan/retrofit-url-manager/1.4.0/69c9ce35dbc67c66718eaf939cc2f44d72acfda2/retrofit-url-manager-1.4.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

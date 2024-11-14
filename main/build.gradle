@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'com.druid.main'
     compileSdkVersion androidVersions.compileSdkVersion
     buildToolsVersion androidVersions.buildToolsVersion
 

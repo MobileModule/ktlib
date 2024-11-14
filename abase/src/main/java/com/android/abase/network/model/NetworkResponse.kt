@@ -1,6 +1,6 @@
 package com.android.abase.network.model
 
-data class ApiResponse<T>(
+data class NetworkResponse<T>(
     val errorCode: Int,
     val errorMsg: String,
     val data: T,

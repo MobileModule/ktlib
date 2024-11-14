@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
  * ViewModel的基类 使用ViewModel类
  */
 open class BaseViewModel : ViewModel() {
-    val PAGE_LIMIT: Int = 40
+    companion object {
+        const val PAGE_LIMIT: Int = 40
+    }
+
     val loadingStatus: UiLoadingStatus by lazy { UiLoadingStatus() }
 
     inner class UiLoadingStatus {

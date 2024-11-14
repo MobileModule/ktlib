@@ -12,13 +12,13 @@ import okhttp3.Response
 class MyCacheInterceptor(var day: Int = 7) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        if (!com.android.abase.network.util.NetworkUtil.isNetworkAvailable(appContext)) {
+        if (!NetworkUtil.isNetworkAvailable(appContext)) {
             request = request.newBuilder()
                 .cacheControl(CacheControl.FORCE_CACHE)
                 .build()
         }
         val response = chain.proceed(request)
-        if (!com.android.abase.network.util.NetworkUtil.isNetworkAvailable(appContext)) {
+        if (!NetworkUtil.isNetworkAvailable(appContext)) {
             val maxAge = 60 * 60
             response.newBuilder()
                 .removeHeader("Pragma")

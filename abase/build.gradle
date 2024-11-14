@@ -1,3 +1,7 @@
+plugins {
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
@@ -16,6 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField "boolean", "DEBUG", "true"
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -26,6 +33,15 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.1'
     }
 }
 
@@ -48,6 +64,13 @@ dependencies {
     api dependenciesList.PersistentCookieJar
     implementation dependenciesList.NavigationFragmentKtx
     implementation dependenciesList.NavigationCommonKtx
+
+    implementation dependenciesList.androidxUi
+    implementation dependenciesList.androidxUiGraphics
+    implementation dependenciesList.androidxUiTooling
+    implementation dependenciesList.androidxUiToolingPreview
+    implementation dependenciesList.androidxMaterial3
+    implementation dependenciesList.androidxActivityCompose
 }
 
 if (rootProject.file('gradle/publish-module.gradle').exists()) {
